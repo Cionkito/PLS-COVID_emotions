@@ -1,6 +1,6 @@
 # PLS COVID-19 emotions
 
-Code to compute partial least square (PLS) correlation results and figure for the publication : Thomasson, M., et al. (2023) _Markers of limbic system damage folowing SARS-CoV-2 infection_
+Code to compute partial least square (PLS) correlation results and figure for the publication : Thomasson, M., et al. (2023) _Markers of limbic system damage following SARS-CoV-2 infection_
 
 
 The code includes two parts: the first part runs in Matlab (folder MATLAB) and is taken from the _myPLS_ toolbox (available here: https://github.com/MIPLabCH/myPLS); the second part (generation of figures) is implemented in Python.
