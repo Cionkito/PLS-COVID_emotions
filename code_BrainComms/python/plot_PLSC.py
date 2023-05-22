@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
-""" Python module for plotting results from the Partial Least Square Correlation analyses
+""" Python module for plotting results from the Partial Least Square Correlation analyses (from the myPLS MATLAB toolbox)
 
 Run as:
 
@@ -22,7 +22,7 @@ sys.path.append(op.abspath(f'../'))
 #print(op.abspath('../'))
 
 import plot_connect as vpc
-import Utility.fmri_utils as futils
+import fmri_utils as futils
 
 
 def load_PLSC_image(study, path_to_study, LC_id = 0, results = "BSR", n_area = 156):
