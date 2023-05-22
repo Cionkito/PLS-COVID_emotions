@@ -81,57 +81,18 @@
 %% ---------- Input data ----------
 
 %%%%%%%% LOAD YOUR DATA HERE %%%%%%%%
-%load('sev_data_v06_BP.mat');
-%load('fc_fc_Cos5_smth4_SCR_0exc.mat');
-%load('fc_fconn_Cos5_smth4_0exc_v02.mat');
 load('fc_fconn_Cos5_smth4_0exc_v02_wP070.mat');
-%load('fmri3D_Cos5_smth4-Pons_6mm-49sub_3k_4exc.mat')
-%load('fmri3D_Cos5_smth4-Pons_6mm-49sub_5k_0exc.mat')
-
-%load('Severity_data_v01_Fixed.mat');
 
 pat_FC = cellstr(pat_ids);
 
-%load('Severity_behav_v01_0exc_wP070.mat');
+load('Emo_behav_v02_0exc.mat');
 
-%load('Emo_behav_v01_0exc.mat');
-%load('Emo_behav_v02_0exc.mat');
-
-%load('Immuno_v02_0exc.mat')
-%load('Immuno3_v01.mat')
-load('ImmunoFatigue_v00.mat')
-
-%load('Awareness_behav_v01_0exc.mat')
-%load('Awareness-behav-SAD-v01.mat')
-
-%red_connectivity(red_connectivity > 0)
-
-%X0 = red_connectivity;
 X0 = fc_lined;
 
 suf = '';
 
-%X0_occ = [CAP01_occ, CAP02_occ, CAP03_occ, CAP04_occ, CAP05_occ];
-%names_occ = {'CAP 1 occ.', 'CAP 2 occ.', 'CAP 3 occ.', ...
-%    'CAP 4 occ.', 'CAP 5 occ.'};
-%
-%X0_dur = [CAP01_AvgDur, CAP02_AvgDur, CAP03_AvgDur, CAP04_AvgDur, ...
-%    CAP05_AvgDur];
-%names_dur = {'CAP 1 mean dur.', 'CAP 2 mean dur.', ...
-%    'CAP 3 mean dur.', 'CAP 4 mean dur.', 'CAP 5 mean dur.'};
-
-%X0 = X0_occ;
-%input.img_names = names_occ;
-%suf = strcat('-occ', suf);
-
-%X0 = X0_dur;
-%input.img_names = names_dur;
-%suf = strcat('-duc', suf);
-
 %X0 = cat(2, X0_occ, X0_dur);
 %input.img_names = cat(2, names_occ, names_dur);
-
-%pat_FC([47, 48, 49]) = {'P088', 'P092', 'P124'};
 
 %[x, ia, ib] = intersect(pat_ids, pat_FC);
 %%[x, ia, ib] = intersect(CovidCog, pat_FC);
@@ -142,36 +103,9 @@ suf = '';
 %X0(idx, :) = [];
 %pat_FC(idx) = [];
 
-%% SEVERITY
-%Y0behav = [RLRI_ImRecall, RLRI_FreeRecallSum, RLRI_DelayedFreeRecall, ...
-%    TMT_B_Time, TMT_B_A_Time, Age, Gender];
-%input.behav_names = {'Immediate Recall', 'Free Recall (Sum)', ...
-%    'Delayed Free Recall', 'TMT B Time', 'TMT B/A Time', 'Age', 'Gender'};
-
-%Y0behav = [RLRI_ImRecall, RLRI_FreeRecallSum, RLRI_DelayedFreeRecall, ...
-%    TMT_B_Time, TMT_B_A_Time];
-%input.behav_names = {'Immediate Recall', 'Free Recall (Sum)', ...
-%    'Delayed Free Recall', 'TMT B Time', 'TMT B/A Time'};
-
-%Y0behav = [Immediate_recall_per, Free_recall, Delayed_free_recall, ...
-%    TMT_b_time_per, TMT_ba_time_per, Age, Gender];
-%input.behav_names = {'Immediate Recall', 'Free Recall (Sum)', ...
-%    'Delayed Free Recall', 'TMT B Time', 'TMT B/A Time', 'Age', 'Gender'};
-
-%Y0behav = [Immediate_recall, Free_recall, Delayed_free_recall, ...
-%    TMT_b_time, TMT_ba_time];
-%input.behav_names = {'Immediate Recall', 'Free Recall (Sum)', ...
-%    'Delayed Free Recall', 'TMT B Time', 'TMT B/A Time'};
-
-%% FATIGUE
-%Y0behav = [TAP_Fatigue, Taux_Total, Taux_Cog, Taux_Phy, Taux_soc, ...
-%    Taux_Psy, Age, Gender];
-%input.behav_names = {'Obj. Fatigue', 'Subj. Fatigue', 'Cognitive', ...
-%    'Physic', 'Social', 'Psychological', 'Age', 'Gender'};
-
 %% EMO
-%Y0behav = [score_total, Fear, Disgust, Irritati1];
-%input.behav_names = {'Totale', 'Fear', 'Disgust', 'Irritation'};
+Y0behav = [score_total, Fear, Disgust, Irritati1];
+input.behav_names = {'Totale', 'Fear', 'Disgust', 'Irritation'};
 
 %Y0behav = [score_total, Fear, Disgust, Irritati1, Age, Gender];
 %input.behav_names = {'Totale', 'Fear', 'Disgust', 'Irritation', 'Age', ...
@@ -184,42 +118,13 @@ suf = '';
 %Y0behav = cat(2, Y0behav, [Age, Gender]);
 %input.behav_names = cat(2, input.behav_names, {'Age', 'Gender'});
 %suf = strcat('-wcov2', suf);
-%Y0behav = cat(2, Y0behav, [RLRI_DelayedTotalRecall]);
-%input.behav_names = cat(2, input.behav_names, {'Episodic memory'});
-%suf = strcat('-wmemo1', suf);
+Y0behav = cat(2, Y0behav, [RLRI_DelayedTotalRecall]);
+input.behav_names = cat(2, input.behav_names, {'Episodic memory'});
+suf = strcat('-wmemo1', suf);
 
-%% Immuno
-Age = double(Age);
-Gender = double(Gender);
-NSC = double(NSC);
-Y0behav = [TNFa, IL_6, IL_8, IL_1Ra, Il_1_beta, IFN_gamma, GCSF, ...
-    GM_CSF, fatigue_total, Age, Gender, NSC];
-input.behav_names = {'TNFa', 'IL_6', 'IL_8', 'IL_1Ra', 'Il_1_beta', ...
-    'IFN_gamma', 'GCSF', 'GM_CSF', 'Fatigue', 'Age', 'Gender', 'NSC'};
-
-% Immuno #3
-%Y0behav = [TNFa, IFN_gamma, Neutrophiles_raw, Monocytes_raw];
-%input.behav_names = {'TNFa', 'IFN_gamma'};%, 'Neutrophiles', 'Monocytes'};
-
-%% Awareness
-%Y0behav = [Consc_Cog, Consc_Olf, Consc_Fatigue, Age, Gender];
-%Y0behav = [Consc_Cog, Consc_Olf, SAD_PV, Age, Gender];
-%input.behav_names = {'Cog', 'Olf', 'Fatigue', 'Age', 'Gender'};
-
-%Y0behav = [Memory, Anosmie, QPC, ...
-%    Olf_Symp, Age, Gender];
-%input.behav_names = {'Memory', ...
-%    'Anosmie', 'QPC',  'Olf_Symp', 'Age', 'Gender'};
-
-%Y0behav = [Cognition, SAD_PV, SAD_ex_mdt, SAD_ex_inhib, ...
-%            SAD_ex_flex_notime];
-%input.behav_names = {'SAD Cognition', 'SAD Fatigue', ...
-%    'SAD MDT', 'SAD Inhib,', 'SAD Flex.'};
-%suf = strcat('-nolfa', suf);
-
-%Y0behav = cat(2, Y0behav, [Age, NSC, Gender]);
-%input.behav_names = cat(2, input.behav_names, {'Age', 'NSC', 'Gender'});
-%suf = strcat('-wcov3', suf);
+Y0behav = cat(2, Y0behav, [Age, NSC, Gender]);
+input.behav_names = cat(2, input.behav_names, {'Age', 'NSC', 'Gender'});
+suf = strcat('-wcov3', suf);
 
 %% Handle missing values
 is_nan = sum(isnan(Y0behav), 2) > 0;
@@ -250,54 +155,30 @@ X0(is_nan, :) = [];
 Y0behav(is_nan, :) = [];
 pat_ids(is_nan) = [];
 
-savename = [strcat('Immuno-Fat', suf)];
+savename = [strcat('Emo-COVID', suf)];
 
-GROUPING = 0;
+GROUPING = 1;
 grp_fltr = 0;
-to_group = Groups;
-%to_group = phenotype_SAD;
+to_group = groups;
+
+% Set to 1 for scatter plots (Warning: will require more than 1 min of run
+% time and generate files larger than 2Gb)
 SAVE_BOOTSTRAP = 0;
 
 to_group = to_group(ia);
 to_group(is_nan) = [];
 
-exclude = [];
+%exclude = [];
 % EMO: Remove FC from: [2, 10, 44] P077 -> 22
-%X0([2, 10, 44], :) = [];
-%pat_FC([2, 10, 44], :) = [];
-%exclude = [22];
-% SEVERITY: Remove P033, P081, P088, P097 -> [12, 30, 36, 47]
-%X0([12, 30, 36, 47], :) = [];
-%pat_FC([12, 30, 36, 47], :) = [];
-%Y0behav([12, 30, 36, 47], :) = [];
-%to_group([12, 30, 36, 47], :) = [];
-% Immuno :
-%[r, tf] = rmmissing(Y0behav);
-%id_nan = find(tf);
-%X0(id_nan, :) = [];
-%pat_FC(id_nan, :) = [];
-%Y0behav(id_nan, :) = [];
-%to_group(id_nan, :) = [];
-% Awareness : Remove P049 & P082 -> [16, 39]
-%X0([16, 39], :) = [];
-%pat_FC([16, 39], :) = [];
-%Y0behav([16, 39], :) = [];
-%to_group([16, 39], :) = [];
-% 3k : remove ['P034', 'P049', 'P082', 'R3618'] -> [13, 16, 31, 48]
-% 5k : remove ['P049', 'P124' (R3674), 'P001'] -> [1, 16, 45]
-%exclude = [1, 16, 45];
+exclude = [22];
 
 X0(exclude, :) = [];
 pat_FC(exclude, :) = [];
 Y0behav(exclude, :) = [];
 to_group(exclude, :) = [];
 
-%group_names = {'Mild','Moderate', 'Severe'};
-%grp_names = {'_mild', '_moderate', '_severe'};
-group_names={'LoA','NA', 'HA'};
-grp_names = {'_LoA', '_NA', '_HA'};
-%group_names={'Anoso','Noso'};
-%grp_names = {'_Anoso', '_Noso'};
+group_names = {'Mild','Moderate', 'Severe'};
+grp_names = {'_mild', '_moderate', '_severe'};
 
 if grp_fltr
     X0(to_group ~= grp_fltr, :) = [];
@@ -344,7 +225,7 @@ end
 % --- Permutations & Bootstrapping ---
 pls_opts.nPerms = 1000; %initial is 200
 pls_opts.nBootstraps = 500; %initial is 100
-pls_opts.nBootstraps = 380; %initial is 100
+%pls_opts.nBootstraps = 380; %initial is 100
 
 % --- Data normalization options ---
 % 0: no normalization
@@ -393,8 +274,8 @@ pls_opts.behav_type = 'behavior';
 
 %% ---------- Options for result saving and plotting ----------
 % --- path where to save the results ---
-save_opts.output_path = strcat('./', savename, grp_suffix, '_GRP'*GROUPING);
-%save_opts.output_path = strcat('./Fatigue_BP_Obj_mac', '_GRP'*GROUPING);
+path_to_results = '../../../outputs/PLS_results/';
+save_opts.output_path = strcat(path_to_results, savename, grp_suffix, '_GRP'*GROUPING);
 
 % --- prefix of all results files ---
 % this is also the default prefix of the toolbox if you don't define
