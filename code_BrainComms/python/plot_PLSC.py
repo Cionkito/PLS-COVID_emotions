@@ -9,6 +9,7 @@ Run as:
 
 import numpy as np
 import pandas as pd
+import scipy.io as scio
 import os.path as op
 import matplotlib.pyplot as plt
 from matplotlib import cm
@@ -56,6 +57,7 @@ def load_PLSC_image(study, path_to_study, LC_id = 0, results = "BSR", n_area = 1
 
     try:
         f = h5py.File(path_to_file, 'r')
+        #pls_data = scio.loadmat(path_to_file)
     except FileNotFoundError:
         print(f"File not found with specified normalization. Trying {3-NORM:1d} instead.")
         path_to_file = op.join(op.realpath(path_to_study),study,
@@ -63,7 +65,7 @@ def load_PLSC_image(study, path_to_study, LC_id = 0, results = "BSR", n_area = 1
         
         f = h5py.File(path_to_file, 'r')
 
-
+    #print(pls_data['res'].dtype)
     if results == "BSR":
         # Computation of Bootrstrap Ratio
         PLS_image = f['res']['V'][LC_id]/f['res']['boot_results']['Vb_std'][LC_id]
@@ -86,7 +88,7 @@ def load_PLSC_image(study, path_to_study, LC_id = 0, results = "BSR", n_area = 1
     image_array[triu_idx[0], triu_idx[1]] = PLS_image
     image_array[triu_idx[1], triu_idx[0]] = PLS_image
 
-    f.close()
+    #f.close()
 
     return image_array
 
