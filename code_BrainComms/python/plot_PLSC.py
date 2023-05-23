@@ -9,7 +9,6 @@ Run as:
 
 import numpy as np
 import pandas as pd
-import scipy.io as scio
 import os.path as op
 import matplotlib.pyplot as plt
 from matplotlib import cm
